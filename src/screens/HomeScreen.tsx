@@ -1,6 +1,6 @@
 import React from 'react';
-import RecipeList from './RecipeList';
-import Layout from './Layout';
+import RecipeList from '../componets/RecipeList';
+import Layout from '../componets/Layout';
 
 const DATA = [
   {
