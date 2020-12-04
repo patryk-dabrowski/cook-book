@@ -1,5 +1,6 @@
 import React from 'react';
 import RecipeList from './RecipeList';
+import Layout from './Layout';
 
 const DATA = [
   {
@@ -33,7 +34,11 @@ const DATA = [
 ];
 
 const HomeScreen: React.FC = () => {
-  return <RecipeList data={DATA} />;
+  return (
+    <Layout>
+      <RecipeList data={DATA} />
+    </Layout>
+  );
 };
 
 export default HomeScreen;
