@@ -3,6 +3,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from './src/componets/HomeScreen';
 import {createStackNavigator} from '@react-navigation/stack';
+import DetailsScreen from './src/componets/DetailsScreen';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,11 @@ const App: React.FC = () => {
           name="Home"
           component={HomeScreen}
           options={{title: 'Welcome'}}
+        />
+        <Stack.Screen
+          name="Details"
+          component={DetailsScreen}
+          options={{title: 'Details'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
