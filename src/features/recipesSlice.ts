@@ -7,17 +7,8 @@ import {
 import {RootState} from '../rootReducer';
 import {Recipe} from '../types';
 import fakeAPI from '../services/fakeAPI';
-import {normalize, schema} from 'normalizr';
-
-// Define normalizr entity schemas
-export const userEntity = new schema.Entity('users');
-export const commentEntity = new schema.Entity('comments', {
-  author: userEntity,
-});
-export const articleEntity = new schema.Entity('recipes', {
-  author: userEntity,
-  comments: [commentEntity],
-});
+import {normalize} from 'normalizr';
+import {articleEntity} from '../schemas';
 
 export const recipesAdapter = createEntityAdapter<Recipe>();
 
