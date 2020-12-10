@@ -1,42 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import RecipeList from '../componets/RecipeList';
 import Layout from '../componets/Layout';
-
-const DATA = [
-  {
-    id: '1',
-    image: 'https://reactnative.dev/img/tiny_logo.png',
-    title: 'test 1',
-    description:
-      'lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum',
-  },
-  {
-    id: '2',
-    image: 'https://reactnative.dev/img/tiny_logo.png',
-    title: 'test 2',
-    description:
-      'lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum',
-  },
-  {
-    id: '3',
-    image: 'https://reactnative.dev/img/tiny_logo.png',
-    title: 'test 3',
-    description:
-      'lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum',
-  },
-  {
-    id: '4',
-    image: 'https://reactnative.dev/img/tiny_logo.png',
-    title: 'test 4',
-    description:
-      'lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum',
-  },
-];
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchRecipes, selectAllRecipes} from '../features/recipesSlice';
+import {Recipe} from '../types';
 
 const HomeScreen: React.FC = () => {
+  const dispatch = useDispatch();
+  const recipes: Recipe[] = useSelector(selectAllRecipes);
+
+  useEffect(() => {
+    dispatch(fetchRecipes());
+  }, [dispatch]);
+
   return (
     <Layout>
-      <RecipeList data={DATA} />
+      <RecipeList data={recipes} />
     </Layout>
   );
 };

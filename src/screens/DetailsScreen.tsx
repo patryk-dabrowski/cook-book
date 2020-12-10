@@ -1,22 +1,16 @@
-import React, {useEffect} from 'react';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {Image, Route, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useRoute} from '@react-navigation/native';
-
-const DATA = {
-  id: '2',
-  image: 'https://reactnative.dev/img/tiny_logo.png',
-  title: 'test 2',
-  description:
-    'lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum',
-};
+import {useSelector} from 'react-redux';
+import {selectByIdRecipe} from '../features/recipesSlice';
+import {Recipe} from '../types';
+import {RootState} from '../rootReducer';
 
 const DetailsScreen: React.FC = () => {
-  const {image, title, description} = DATA;
-  const route = useRoute();
-
-  useEffect(() => {
-    console.log(route.params);
-  }, [route]);
+  const route: Route = useRoute();
+  const id = route.params.id;
+  const recipe = useSelector((store: RootState) => selectByIdRecipe(store, id));
+  const {image, title, description} = recipe as Recipe;
 
   return (
     <ScrollView>
