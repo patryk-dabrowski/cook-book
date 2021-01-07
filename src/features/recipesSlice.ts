@@ -14,7 +14,10 @@ import {articleEntity} from '../schemas';
 export const recipesAdapter = createEntityAdapter<Recipe>();
 
 export const fetchRecipes = createAsyncThunk('recipes/fetchAll', async () => {
-  const recipes = await firestore().collection('Recipes').get();
+  const recipes = await firestore()
+    .collection('Recipes')
+    .orderBy('created_at', 'desc')
+    .get();
   const data: Recipe[] = [];
 
   recipes.forEach((recipe) => {
