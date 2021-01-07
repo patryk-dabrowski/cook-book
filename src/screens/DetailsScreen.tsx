@@ -11,35 +11,38 @@ import {RootState} from '../rootReducer';
 import Card from '../componets/Card';
 import Comment from '../componets/Comment';
 import RecipeCard from '../componets/RecipeCard';
+import Ingredient from '../componets/Ingredient';
 
 const DetailsScreen: React.FC = () => {
   const route: Route = useRoute();
   const id = route.params.id;
   const recipe = useSelector((store: RootState) => selectByIdRecipe(store, id));
-  const {description, comments, id: recipeId} = recipe as Recipe;
+  const {description, comments, id: recipeId, ingredients} = recipe as Recipe;
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCommentsByRecipeId({recipeId}));
   }, [recipeId, dispatch]);
 
-  const renderComments = () => {
-    if (!comments) {
-      return false;
-    }
-
-    return (
-      <Card header={'Comments'}>
-        {comments.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
-        ))}
-      </Card>
-    );
-  };
-
   if (!recipe) {
     return <View />;
   }
+
+  const renderedIngredients = ingredients && (
+    <Card header={'Ingredients'}>
+      {ingredients.map((ingredient, index) => (
+        <Ingredient key={index} index={index + 1} ingredient={ingredient} />
+      ))}
+    </Card>
+  );
+
+  const renderedComments = comments && (
+    <Card header={'Comments'}>
+      {comments.map((comment) => (
+        <Comment key={comment.id} comment={comment} />
+      ))}
+    </Card>
+  );
 
   return (
     <ScrollView>
@@ -47,7 +50,8 @@ const DetailsScreen: React.FC = () => {
       <Card header={'Description'}>
         <Text>{description}</Text>
       </Card>
-      {renderComments()}
+      {renderedIngredients}
+      {renderedComments}
     </ScrollView>
   );
 };
