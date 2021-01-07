@@ -1,6 +1,7 @@
 import {
   createAsyncThunk,
   createEntityAdapter,
+  createSelector,
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit';
@@ -74,13 +75,17 @@ export const fetchCommentsByRecipeId = createAsyncThunk(
 
 export const slice = createSlice({
   name: 'recipes',
-  initialState: recipesAdapter.getInitialState(),
+  initialState: recipesAdapter.getInitialState({loading: false}),
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(fetchRecipes.pending, (state) => {
+      state.loading = true;
+    });
     builder.addCase(
       fetchRecipes.fulfilled,
       (state, action: PayloadAction<any>) => {
-        recipesAdapter.upsertMany(state, action.payload.recipes);
+        state.loading = false;
+        recipesAdapter.setAll(state, action.payload.recipes);
       },
     );
     builder.addCase(
@@ -98,3 +103,7 @@ export const {
   selectAll: selectAllRecipes,
   selectById: selectByIdRecipe,
 } = recipesAdapter.getSelectors<RootState>((state) => state.recipes);
+export const loadingRecipe = createSelector(
+  (state: RootState) => state.recipes,
+  (recipes) => recipes.loading,
+);

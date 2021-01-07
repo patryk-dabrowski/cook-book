@@ -2,7 +2,7 @@ import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 
 export interface Props {
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
 }
 
 const Layout: React.FC<Props> = ({children}) => (
