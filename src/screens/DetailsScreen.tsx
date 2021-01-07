@@ -28,7 +28,7 @@ const DetailsScreen: React.FC = () => {
     return <View />;
   }
 
-  const renderedIngredients = ingredients && (
+  const renderedIngredients = ingredients && ingredients.length > 0 && (
     <Card header={'Ingredients'}>
       {ingredients.map((ingredient, index) => (
         <Ingredient key={index} index={index + 1} ingredient={ingredient} />
@@ -36,7 +36,7 @@ const DetailsScreen: React.FC = () => {
     </Card>
   );
 
-  const renderedComments = comments && (
+  const renderedComments = comments && comments.length > 0 && (
     <Card header={'Comments'}>
       {comments.map((comment) => (
         <Comment key={comment.id} comment={comment} />
