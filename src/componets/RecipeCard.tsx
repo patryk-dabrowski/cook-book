@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {Difficulty, Recipe} from '../types';
+import {formatted} from '../utils/date';
 
 export interface Props {
   recipe: Recipe;
@@ -20,7 +21,15 @@ const difficultyMapping = (difficulty: Difficulty) => {
 };
 
 const RecipeCard: React.FC<Props> = ({recipe}) => {
-  const {image, title, score, author, difficulty, preparation_time} = recipe;
+  const {
+    image,
+    title,
+    score,
+    author,
+    difficulty,
+    preparation_time,
+    created_at,
+  } = recipe;
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{uri: image}} />
@@ -32,6 +41,9 @@ const RecipeCard: React.FC<Props> = ({recipe}) => {
       <View style={styles.details}>
         <Text>Created by {author}</Text>
         <Text>{preparation_time}</Text>
+      </View>
+      <View style={styles.details}>
+        <Text>Created at {formatted(created_at)}</Text>
       </View>
     </View>
   );
