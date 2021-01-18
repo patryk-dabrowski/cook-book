@@ -1,5 +1,12 @@
-import React, {useEffect} from 'react';
-import {Route, ScrollView, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Route,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -14,6 +21,7 @@ import RecipeCard from '../componets/RecipeCard';
 import Ingredient from '../componets/Ingredient';
 
 const DetailsScreen: React.FC = () => {
+  const [isShowMore, setShowMore] = useState(false);
   const route: Route = useRoute();
   const id = route.params.id;
   const recipe = useSelector((store: RootState) => selectByIdRecipe(store, id));
@@ -44,16 +52,40 @@ const DetailsScreen: React.FC = () => {
     </Card>
   );
 
+  const toggleShowMore = () => {
+    setShowMore((prevState) => !prevState);
+  };
+
   return (
     <ScrollView>
       <RecipeCard recipe={recipe} />
       <Card header={'Description'}>
-        <Text>{description}</Text>
+        {isShowMore ? (
+          <>
+            <Text>{description.full}</Text>
+            <TouchableWithoutFeedback onPress={toggleShowMore}>
+              <Text style={styles.showMore}>pokaż mniej</Text>
+            </TouchableWithoutFeedback>
+          </>
+        ) : (
+          <>
+            <Text>{description.excerpt}</Text>
+            <TouchableWithoutFeedback onPress={toggleShowMore}>
+              <Text style={styles.showMore}>pokaż więcej</Text>
+            </TouchableWithoutFeedback>
+          </>
+        )}
       </Card>
       {renderedIngredients}
       {renderedComments}
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  showMore: {
+    color: '#0073ff',
+  },
+});
 
 export default DetailsScreen;

@@ -4,11 +4,16 @@ export enum Difficulty {
   HARD = 3,
 }
 
+export interface Description {
+  excerpt: string;
+  full: string;
+}
+
 export interface Recipe {
   id: string;
   image: string;
   title: string;
-  description: string;
+  description: Description;
   created_at: string;
   score: number;
   difficulty: Difficulty;
